@@ -1,0 +1,41 @@
+IA=conjunto de tecnicas em computação p/ simular uma inteligencia humana
+
+modelo de linguagem em ingles é LLM =>Large language model
+
+existem 3 níveis de usuários de IA
+
+level newbie:                  level experiente:                level hacker:
+
+99% dos usuários de IA usam    0.99% da dos usuários de IA        0.01% dos usuários da IA
+interfaces das ferramentas     entendem os conceitos da           criadores dos modelos de linguagem
+já criadas e entendem que      tecnologia e se conectam com       como o chat GPT,gemini,grok etc.
+a IA é o final,e não o meio    poder computacional dos modelos   
+                               de linguagem criados             
+                                                                
+não entendem os conceitos da  entendem que a IA não é só o final    eles criam as IAs 💀💀💀
+tecnologia                    e sim um meio
+
+modelo de linguagem(LLM):
+-> modelos de dados neurais dedicados a geração de dados e imagens
+GPT 4.1, GPT 5 o3 mini,2.5 flash gemini pro
+
+engenharia de prompt == forma inteligente de conversar com a IA
+
+como conversar
+oi, ...                                     você é um expecialista em pedras raras...
+sua função é...                               você poderia gerar gerar diamantes a partir do carvâo
+no caso considere o seguinte em contexto...
+faça.
+
+                                            tokens
+são combustivel da IA para gerar o texto
+            1 token == 4 palavras
+
+                                            dataset
+
+conjunto de dados
+
+                                        janela de contexto
+
+período de memória da IA
+
