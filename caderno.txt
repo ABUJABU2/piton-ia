@@ -39,3 +39,13 @@ conjunto de dados
 
 período de memória da IA
 
+classe = "estrutura que contem 'atributos/caracteristicas' e 'metodos/ações' definidos"
+
+classe carro
+
+           modelo = porche
+atributos<
+           cor = azul
+ação -> def acelerar() = ação de acelerar
+
+rb = read bytes
