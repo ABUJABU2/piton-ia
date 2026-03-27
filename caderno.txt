@@ -49,3 +49,34 @@ atributos<
 ação -> def acelerar() = ação de acelerar
 
 rb = read bytes
+
+FRAME WORK:
+
+.bibliotecabque facilitabo desenvolvimento de determinados projetos
+
+.langchain: principal framework para desenvolver AI agents e aplicações de IA
+
+.outros exemplos: crewAI  (feito por João Moura)
+
+
+langchain:
+
+->modelo
+->memória
+->DB (database)
+->tools
+ \/
+.o nosso projeto precisa dessas funções (modelo;memória;DB e tools)
+.constroi o app em fluxo contínuo
+ \/
+[1]---[2]---[3]---[4]
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+             [chatbot]    [AI agent]
+inteligencia)  [<5]          [10]
+flexibilidade) [0]           [10]
+entendimento)  [limitado]    [natural]
+toma decisão)  [não]         [sim]
+integração)    [limitada]    [forte]
+exec. ações)   [quase 0]     [sim]    (exec. = executa)
