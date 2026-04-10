@@ -73,10 +73,17 @@ langchain:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-             [chatbot]    [AI agent]
-inteligencia)  [<5]          [10]
-flexibilidade) [0]           [10]
-entendimento)  [limitado]    [natural]
-toma decisão)  [não]         [sim]
-integração)    [limitada]    [forte]
-exec. ações)   [quase 0]     [sim]    (exec. = executa)
+              [chatbot]    [AI agent]
+(inteligencia)  [<5]          [10]
+(flexibilidade) [0]           [10]
+(entendimento)  [limitado]    [natural]
+(toma decisão)  [não]         [sim]
+(integração)    [limitada]    [forte]
+(exec. ações)   [quase 0]     [sim]    (exec. = executa)
+
+RAG: tecnica de otimização de busca por embeddings
+                                          \/
+                                   representação de string em númérico
+sem RAG:procura em todo o database
+
+com RAG:vai diretamente na área do que você perguntou sobre
