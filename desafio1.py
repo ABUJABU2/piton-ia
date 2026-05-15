@@ -1,29 +1,29 @@
 ideias = {
-"Tecnologia": [
+"tecnologia": [
 "App que organiza tarefas escolares",
 "IA para resumir aulas",
 "Site para aprender programação"
 ],
 
-"Games": [
+"games": [
 "Campeonato online",
 "Loja de skins",
 "Canal de gameplay"
 ],
 
-"Pets": [
+"pets": [
 "Coleira inteligente",
 "Hotel para pets",
 "Rede social de animais"
 ],
 
-"Comida": [
+"comidas": [
 "Delivery saudável",
 "Doceria online",
 "App de receitas"
 ],
 
-"Esportes": [
+"esportes": [
 "Escolinha online",
 "App de treinos",
 "Ranking de atletas"
@@ -33,11 +33,15 @@ ideias = {
 
 import streamlit as st
 import random
-
+st.logo("socrates.jpg")
 a = st.title("gerador de ideia")
 q=st.text_input("qual seu nome")
-w=st.selectbox("qual seu tipo de negócio" ,[ "tecnologia" , "games" , "pets","comidas", "esports"] )
+w=st.selectbox("qual seu tipo de negócio" ,[ "tecnologia" , "games" , "pets","comidas", "esportes"] )
 e=st.button("ideia aleatória")
 
 if e :
-    st.title( random.choice(ideias))
+    random=random.choice(ideias[w])
+    st.title(random)  
+    st.balloons()
+
+    
