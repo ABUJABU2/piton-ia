@@ -33,6 +33,8 @@ ideias = {
 
 import streamlit as st
 import random
+import time
+
 st.logo("socrates.jpg")
 a = st.title("gerador de ideia")
 q=st.text_input("qual seu nome")
@@ -40,6 +42,9 @@ w=st.selectbox("qual seu tipo de negócio" ,[ "tecnologia" , "games" , "pets","c
 e=st.button("ideia aleatória")
 
 if e :
+    with st.spinner(text="gerando ideia...", show_time=True):
+        time.sleep(5)
+
     random=random.choice(ideias[w])
     st.title(random)  
     st.balloons()
