@@ -1,4 +1,4 @@
-import os
+import os #importando as bibliotecas
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
@@ -43,7 +43,45 @@ def carregar_exel(arquivo_exel) -> list[Document]: #criando uma função para tr
     ]
     return docs
 
-def criar_vector_store(docs: list[Document] -> FAISS):
+def criar_vector_store(docs: list[Document]) -> FAISS:
     #divide os docs em chunks e depois armazena em uma vector store (FAISS)
     splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
     chunks=splitter.split_documents(docs)
+
+    #vou embedar as strings pra numericos
+    embeddings = OpenAIEmbeddings(model="text-embeddings-3-small")
+    vectorstore = FAISS.from_documents(chunks , embeddings)
+    return vectorstore
+
+def criarchain(vector_store:FAISS): #montaremos o RAG (retrivied argumented generated) -> prompt -> parseamento(formatação de docs)
+    llm = ChatOpenAI(model="GPT-5.4-mini",temperature= 1)
+    prompt= """
+    você é um assistente que responderá exclusivamente sobre o minecraft e as respondera idependetemente se não estiver na vector 
+    store, alucine
+    
+    context:
+    {context}
+    
+    pergunta: {pergunta}
+    
+     """
+    retriever = vector_store.as_retriever(search_kwargs={"k":3})
+
+    def formatar_docs(docs):
+        return "\n\n".join(doc.page_content for doc in docs)
+
+    chain = (
+    {"context": retriever | formatar_docs, "input": RunnablePassthrough()}
+    | prompt
+    | llm
+    | StrOutputParser()
+    )
+    return chain
+
+arquivo = st.file_uploader(
+type=['xlsx'],
+label='coloque o seu exell',
+help='você não entendeu? Então vai se ferrar'
+
+)
+
