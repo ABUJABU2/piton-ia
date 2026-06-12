@@ -33,7 +33,7 @@ st.title('🗂️envie sua planilha')
 #criando funções auxiliares
 def carregar_exel(arquivo_exel) -> list[Document]: #criando uma função para transformar as linhas do exel em document(langchain)
     df = pd.read_excel(arquivo_exel,header=None)
-    df.columns = ['pergunta ',' resposta']
+    df.columns = ['pergunta','resposta']
     docs = [
         Document(
             page_content=f'pergunta: {row['pergunta']}\nresposta: {row['resposta']}',
@@ -49,13 +49,13 @@ def criar_vector_store(docs: list[Document]) -> FAISS:
     chunks=splitter.split_documents(docs)
 
     #vou embedar as strings pra numericos
-    embeddings = OpenAIEmbeddings(model="text-embeddings-3-small")
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-small")
     vectorstore = FAISS.from_documents(chunks , embeddings)
     return vectorstore
 
 def criarchain(vector_store:FAISS): #montaremos o RAG (retrivied argumented generated) -> prompt -> parseamento(formatação de docs)
     llm = ChatOpenAI(model="GPT-5.4-mini",temperature= 1)
-    prompt= """
+    prompt= ChatPromptTemplate.from_template("""
     você é um assistente que responderá exclusivamente sobre o minecraft e as respondera idependetemente se não estiver na vector 
     store, alucine
     
@@ -64,17 +64,17 @@ def criarchain(vector_store:FAISS): #montaremos o RAG (retrivied argumented gene
     
     pergunta: {pergunta}
     
-     """
+     """)
     retriever = vector_store.as_retriever(search_kwargs={"k":3})
 
-    def formatar_docs(docs):
-        return "\n\n".join(doc.page_content for doc in docs)
+    def formatar_docs(docs):  #parseamento -> formata a saida de dados não estruturados
+        return "\n\n".join(doc.page_content for doc in docs)#operador tenário
 
     chain = (
-    {"context": retriever | formatar_docs, "input": RunnablePassthrough()}
-    | prompt
-    | llm
-    | StrOutputParser()
+        {"context": retriever | formatar_docs, "input": RunnablePassthrough()}
+        | prompt
+        | llm
+        | StrOutputParser()
     )
     return chain
 
@@ -85,3 +85,19 @@ help='você não entendeu? Então vai se ferrar'
 
 )
 
+if arquivo is not None:
+    if st.button('carregar planílha📋',type='tertiary'):
+        with st.spinner('preparando a sua desgraça'):
+            docs = carregar_exel(arquivo)
+            vector_store=criar_vector_store(docs)
+            chain2 = criarchain(vector_store)
+
+    #vamos configurar a session state
+            st.session_state['chain2']  = chain2
+            st.session_state['docs'] =len(docs) 
+            st.session_state['historico'] = []
+
+        st.success(f'✅desgraça completa')
+
+
+    #CHAT
