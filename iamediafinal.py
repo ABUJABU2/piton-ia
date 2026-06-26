@@ -54,7 +54,7 @@ def criar_vector_store(docs: list[Document]) -> FAISS:
     return vectorstore
 
 def criarchain(vector_store:FAISS): #montaremos o RAG (retrivied argumented generated) -> prompt -> parseamento(formatação de docs)
-    llm = ChatOpenAI(model="GPT-5.4-mini",temperature= 1)
+    llm = ChatOpenAI(model="gpt-4o-mini",temperature= 1)
     prompt= ChatPromptTemplate.from_template("""
     você é um assistente que responderá exclusivamente sobre o minecraft e as respondera idependetemente se não estiver na vector 
     store, alucine
@@ -71,7 +71,7 @@ def criarchain(vector_store:FAISS): #montaremos o RAG (retrivied argumented gene
         return "\n\n".join(doc.page_content for doc in docs)#operador tenário
 
     chain = (
-        {"context": retriever | formatar_docs, "input": RunnablePassthrough()}
+        {"context": retriever | formatar_docs, "pergunta": RunnablePassthrough()}
         | prompt
         | llm
         | StrOutputParser()
@@ -100,4 +100,30 @@ if arquivo is not None:
         st.success(f'✅desgraça completa')
 
 
-    #CHAT
+#CHAT
+
+if 'chain2' in st.session_state:
+    st.divider()
+    st.text('pergunte algo')
+    
+    for msg in st.session_state['historico']:
+        with st.chat_message('role'):
+            st.markdown(msg['content'])
+    
+    pergunta = st.chat_input('texto aqui')
+
+    if pergunta:
+        with st.chat_message('user'): 
+            st.markdown(pergunta)
+
+        with st.chat_message('assistant'):
+            resposta=st.write_stream(
+                st.session_state['chain2'].stream(pergunta) #tream libera a resposta aos poucos
+            )
+
+        #criando o Historico de mensagens
+        st.session_state['historico'].append({"role":"user","content":pergunta})
+        st.session_state['historico'].append({"role":"assistant","content":resposta})
+
+else:
+    st.info(' se nao entendeu sai do site')
