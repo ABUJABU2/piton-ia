@@ -21,11 +21,11 @@ layout='centered'
 )
 
 #chamar api dentro do script
-load_dotenv()
+load_dotenv(OPENAI_API_KEY)
 
 OPENAI_API_KEY = st.secrets.get(
-    "OPENAI_API_KEY",
-    os.getenv("OPENAI_API_KEY")
+    OPENAI_API_KEY,
+    os.getenv(OPENAI_API_KEY)
 )
 
 #cofg dos elementos da primeira cessão
